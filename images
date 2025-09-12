@@ -1,2 +1,2 @@
-imageA.jpg
-imageB.jpg
+<img src="images/imageA.jpg" alt="Image A" width="800">
+<img src="images/imageB.jpg" alt="Image B" width="600">
