@@ -4,35 +4,46 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Zoo After Hours</title>
+
+<!-- Creative fonts (still simple): -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
   :root{
-    --link:#3366cc;
+    --link:#2f63d8;
     --text:#1a1a1a;
     --muted:#4b4b4b;
     --blue:#2d6bff;
     --pink:#ff3fb5;
   }
+
   *{box-sizing:border-box}
   body{
     margin:0;
-    font: 18px/1.65 system-ui, -apple-system, Segoe UI, sans-serif;
-    color:var(--text);
     background:#fff;
+    color:var(--text);
+    font: 20px/1.75 "Patrick Hand", system-ui, -apple-system, Segoe UI, sans-serif;
   }
 
-  /* Centered story column */
+  /* Centered story column like Twine */
   .wrap{
-    max-width: 820px;
+    max-width: 850px;
     margin: 0 auto;
-    padding: 48px 18px 70px;
+    padding: 52px 18px 70px;
   }
+
   h1{
-    margin:0 0 10px;
-    font-size: 40px;
+    margin:0 0 8px;
+    font: 800 46px/1.05 "Fredoka", system-ui, sans-serif;
     letter-spacing:.2px;
-    font-weight: 800;
   }
-  .sub{color:var(--muted); margin:0 0 28px}
+  .sub{
+    margin:0 0 30px;
+    color:var(--muted);
+    font-size: 1.05rem;
+  }
 
   /* Passages */
   .p{ display:none; }
@@ -42,32 +53,35 @@
   /* Twine-ish links */
   a{
     color: var(--link);
-    font-weight: 800;
+    font-weight: 900;
     text-decoration: none;
-    border-bottom: 2px solid rgba(51,102,204,.25);
+    border-bottom: 2px solid rgba(47,99,216,.22);
+    padding-bottom: 1px;
   }
-  a:hover{ border-bottom-color: rgba(51,102,204,.65); }
+  a:hover{
+    border-bottom-color: rgba(47,99,216,.65);
+  }
 
   /* Gate-color words */
-  .blue{ color:var(--blue); text-shadow:0 0 10px rgba(45,107,255,.20); }
-  .pink{ color:var(--pink); text-shadow:0 0 10px rgba(255,63,181,.20); }
+  .blue{ color:var(--blue); text-shadow:0 0 10px rgba(45,107,255,.18); }
+  .pink{ color:var(--pink); text-shadow:0 0 10px rgba(255,63,181,.18); }
 
-  /* Background per passage (mood shifts) */
+  /* Background per passage */
   .bg::before{
     content:"";
     position:fixed;
     inset:0;
     z-index:-1;
-    background:#fff;
     opacity:0;
     transition: opacity .35s ease;
+    background:#fff;
   }
   .bg:target::before{ opacity:1; }
 
   /* Light scene */
   .bg.light:target::before{
     background:
-      linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.88)),
+      linear-gradient(rgba(255,255,255,.82), rgba(255,255,255,.90)),
       var(--img);
     background-size: cover;
     background-position: center;
@@ -76,25 +90,29 @@
   /* Dark scene */
   .bg.dark{ color:#f2f2ff; }
   .bg.dark .subtle{ color:#d8d8ff; }
-  .bg.dark a{ color:#9fc0ff; border-bottom-color: rgba(159,192,255,.25); }
-  .bg.dark a:hover{ border-bottom-color: rgba(159,192,255,.65); }
+  .bg.dark a{ color:#a8c6ff; border-bottom-color: rgba(168,198,255,.22); }
+  .bg.dark a:hover{ border-bottom-color: rgba(168,198,255,.7); }
   .bg.dark:target::before{
     background:
-      linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.82)),
+      linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.84)),
       var(--img);
     background-size: cover;
     background-position: center;
   }
 
-  /* Small meta line */
-  .subtle{ color:var(--muted); font-size: 0.95rem; margin-top: 10px; }
+  .subtle{
+    color:var(--muted);
+    margin-top: 10px;
+    font-size: 0.98rem;
+  }
 
   /* ROAR grow effect */
   .roar{
-    margin: 14px 0 2px;
+    margin: 14px 0 6px;
     font-weight: 900;
     letter-spacing: 1px;
     color: #ffd6dd;
+    font-family: "Fredoka", system-ui, sans-serif;
   }
   .roar span{
     display:inline-block;
@@ -114,9 +132,9 @@
   .roar span:nth-child(11){animation-delay:900ms}
   .roar span:nth-child(12){animation-delay:990ms}
   @keyframes grow{
-    0%{transform:scale(.7);opacity:.55}
-    60%{transform:scale(1.6);opacity:1}
-    100%{transform:scale(1.1);opacity:.85}
+    0%{transform:scale(.72);opacity:.6}
+    60%{transform:scale(1.62);opacity:1}
+    100%{transform:scale(1.12);opacity:.9}
   }
 
   /* Ending badge */
@@ -125,81 +143,105 @@
     padding: 10px 14px;
     border-radius: 12px;
     display:inline-block;
-    font-weight:800;
+    font-weight:900;
+    font-family: "Fredoka", system-ui, sans-serif;
     border:1px solid rgba(0,0,0,.12);
-    background: rgba(255,255,255,.75);
+    background: rgba(255,255,255,.78);
   }
   .bg.dark .end{ border-color: rgba(255,255,255,.18); background: rgba(0,0,0,.35); }
 
-  /* Only show "Home" where it belongs */
-  .homeLine{ margin-top: 22px; font-size: 0.95rem; }
+  /* A little spacing consistency */
+  p{ margin: 0 0 14px; }
 </style>
 </head>
 
 <body>
   <div class="wrap">
     <h1>Zoo After Hours</h1>
-    <p class="sub">Noah is the last zookeeper on site. The gates are locked. Then something moves.</p>
+    <p class="sub">Noah is the last zookeeper on site. The zoo is closed. Something is still awake.</p>
 
-    <!-- START (light w/ hallway image) -->
+    <!-- START (hallway image, light overlay) -->
     <div id="start" class="p bg light" style="--img:url('images/darkhallwayy.jpg')">
       <p>
-        Noah turns off the last light and starts toward the office. A noise echoes behind him—sharp, close, wrong.
-        The path splits. One side feels colder. The other side sounds… busy.
+        Noah finishes his night shift routine the way he always does: one last check, one last lock, one last “okay, we’re good.”
+        The zoo feels empty in that after-hours way—like the world is holding its breath.
       </p>
       <p>
-        <a href="#radio">His radio crackles</a> &nbsp;&nbsp; <a href="#split">He keeps walking</a>
+        Then a sound snaps through the quiet. Metal… or claws… or something scraping where it shouldn’t be.
+        Noah pauses with his keys in hand, suddenly aware of how loud <em>his own breathing</em> is.
       </p>
-      <p class="homeLine"><a href="index.html">Back to Home</a></p>
+      <p class="subtle">
+        Two hallways split ahead. Left looks colder. Right sounds… fast.
+      </p>
+      <p>
+        <a href="#radio">His radio crackles</a> &nbsp;&nbsp; <a href="#split">He keeps moving</a>
+      </p>
     </div>
 
-    <!-- More interaction: radio -->
+    <!-- RADIO -->
     <div id="radio" class="p">
       <p>
-        The radio hisses with static, then a half-word, then nothing. Noah taps it twice like that will fix reality.
-        Something scrapes on metal somewhere down the hall.
+        The radio hisses with static like it’s chewing on a message. Noah taps it once. Twice.
+        For a second it sounds like a word—then it dissolves back into noise.
       </p>
       <p>
-        <a href="#split">He pockets the radio</a> &nbsp;&nbsp; <a href="#flashlight">He checks the flashlight</a>
+        The worst part is what follows: silence. Like the zoo is listening back.
+      </p>
+      <p>
+        <a href="#flashlight">He checks the flashlight</a> &nbsp;&nbsp; <a href="#split">He pockets the radio</a>
       </p>
     </div>
 
     <div id="flashlight" class="p">
       <p>
-        The flashlight beam flickers. Not dead, but tired.
-        Noah turns it off again to save battery, and the hallway suddenly feels longer.
+        The flashlight beam flickers. Not dead. Just tired.
+        Noah rolls it in his palm like he can convince it to behave.
+      </p>
+      <p>
+        He turns it off again to save battery… and the hallway instantly feels longer than it did two seconds ago.
+        Jejeje—of course this happens on his shift.
       </p>
       <p>
         <a href="#split">He moves anyway</a>
       </p>
     </div>
 
-    <!-- Split -->
+    <!-- SPLIT -->
     <div id="split" class="p">
       <p>
-        Two hallways: left and right.
-        One smells like cold concrete. The other smells like fruit and warm hay.
+        Two hallways. Two different vibes.
+        Left smells like cold concrete and damp air. Right smells like fruit and warm hay.
+      </p>
+      <p class="subtle">
+        Somewhere above him, something taps… tap-tap… like it’s pacing.
       </p>
       <p>
         <a href="#left1">Left hall</a> &nbsp;&nbsp; <a href="#right1">Right hall</a>
       </p>
     </div>
 
-    <!-- LEFT PATH (extra beats) -->
+    <!-- LEFT PATH: build-up -->
     <div id="left1" class="p">
       <p>
-        The left hall is colder. Noah’s footsteps sound louder than they should.
-        At the end, a painted gate waits like a warning sign pretending to be decoration.
+        The left hall is colder. Noah’s footsteps sound louder than they should, like the floor is trying to snitch on him.
+        He tells himself it’s fine. It’s always fine.
       </p>
       <p>
-        <a href="#left2">He slows down</a> &nbsp;&nbsp; <a href="#left3">He keeps a steady pace</a>
+        Then he sees it: a painted gate at the end of the hall.
+        The color looks brighter than it should in the dark, almost like it’s glowing.
+      </p>
+      <p>
+        <a href="#left2">He slows down</a> &nbsp;&nbsp; <a href="#left3">He walks like it’s normal</a>
       </p>
     </div>
 
     <div id="left2" class="p">
       <p>
-        He slows down. The silence presses in.
-        A second sound appears—breathing?—then disappears like it never existed.
+        He slows down. Silence presses in around him.
+        For one second he hears breathing that isn’t his… then it stops, like whatever it is realized he noticed.
+      </p>
+      <p class="subtle">
+        The gate is right there now. The paint is too clean. The latch looks recently touched.
       </p>
       <p>
         <a href="#blue">The <span class="blue">BLUE</span> gate</a>
@@ -208,8 +250,11 @@
 
     <div id="left3" class="p">
       <p>
-        He keeps walking like it’s normal. The gate gets closer.
-        The paint looks too clean for something that gets used every day.
+        He keeps walking like it’s normal. Like he’s not in a closed zoo at night hearing mystery sounds.
+        Like he’s not gripping his keys hard enough to leave dents in his palm.
+      </p>
+      <p>
+        The gate waits anyway. Calm. Patient. Like it already knows he’s coming.
       </p>
       <p>
         <a href="#blue">The <span class="blue">BLUE</span> gate</a>
@@ -218,8 +263,11 @@
 
     <div id="blue" class="p">
       <p>
-        The latch clicks shut. Noah’s hand finds a switch on the wall.
-        The air inside feels… occupied.
+        The latch clicks shut behind Noah.
+        The air inside feels… occupied. Not moving, but <em>there</em>.
+      </p>
+      <p>
+        His fingers find a switch on the wall. He doesn’t love how easy it is to find.
       </p>
       <p>
         <a href="#lionon">Lights on</a> &nbsp;&nbsp; <a href="#lionoff">Lights off</a>
@@ -229,8 +277,12 @@
     <!-- LION OFF (darkliongate.jpg) -->
     <div id="lionoff" class="p bg dark" style="--img:url('images/darkliongate.jpg')">
       <p>
-        Darkness. Two glowing eyes. Noah reaches forward—thick fur under his palms.
-        The sound that follows starts small…
+        Darkness. Immediate.
+        Noah can’t see anything, but he can feel the space shift like it got smaller.
+      </p>
+      <p>
+        Two glowing eyes appear—steady, low, confident.
+        Noah reaches forward like an idiot (respectfully)… and his hands meet thick fur.
       </p>
 
       <div class="roar" aria-label="roar">
@@ -238,40 +290,75 @@
         <span>r</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span>
       </div>
 
-      <p class="subtle">The switch is still on the wall. Noah remembers exactly where it is.</p>
-
+      <p class="subtle">
+        The sound grows inside the dark until it feels like the air itself is shaking.
+      </p>
       <p>
-        <a href="#lionon">The switch</a> &nbsp;&nbsp; <a href="#blue">Back</a>
+        <a href="#lionon">He flips the switch (lights back ON)</a> &nbsp;&nbsp; <a href="#blue">Back</a>
       </p>
     </div>
 
     <!-- LION ON (darklionface.jpg) -->
     <div id="lionon" class="p bg dark" style="--img:url('images/darklionface.jpg')">
       <p>
-        The lights snap on. A lion stands close enough to fill Noah’s vision.
-        For a second, neither of them moves. Then the lion’s tail flicks once—slow.
+        The lights snap on.
+        A lion stands close enough to fill Noah’s vision—eyes locked, face calm, like this is just another Tuesday.
       </p>
-      <p class="subtle">Noah’s legs feel like they belong to someone else.</p>
       <p>
-        <a href="#end_safe_keys">Run</a> &nbsp;&nbsp; <a href="#end_dead">Stay</a>
+        Noah’s brain does that thing where it gives him two thoughts at once:
+        <em>don’t move</em> and <em>MOVE RIGHT NOW</em>.
+      </p>
+      <p class="subtle">
+        The lion’s tail flicks once. Slow. Controlled.
+      </p>
+      <p>
+        <a href="#lionbeat">Noah shifts his weight</a> &nbsp;&nbsp; <a href="#lionbeat2">Noah holds still</a>
       </p>
     </div>
 
-    <!-- RIGHT PATH (extra beats + DARK OPTION too) -->
-    <div id="right1" class="p">
+    <div id="lionbeat" class="p bg dark" style="--img:url('images/darklionface.jpg')">
       <p>
-        The right hall is warmer. Quick taps echo above him like something is moving across pipes or bars.
-        A painted gate waits at the end.
+        He shifts his weight and the lion’s head tilts—tiny movement, huge meaning.
+        Noah feels his heart hit his ribs like it’s trying to escape without him.
       </p>
       <p>
-        <a href="#right2">He looks up</a> &nbsp;&nbsp; <a href="#right3">He keeps his eyes forward</a>
+        <a href="#end_safe_keys">He runs</a> &nbsp;&nbsp; <a href="#end_dead">He stays</a>
+      </p>
+    </div>
+
+    <div id="lionbeat2" class="p bg dark" style="--img:url('images/darklionface.jpg')">
+      <p>
+        He holds still like a statue.
+        The lion takes one slow step forward—no rush, no panic—just power.
+      </p>
+      <p class="subtle">Noah realizes “still” can be the wrong choice, too.</p>
+      <p>
+        <a href="#end_safe_keys">He runs</a> &nbsp;&nbsp; <a href="#end_dead">He stays</a>
+      </p>
+    </div>
+
+    <!-- RIGHT PATH: build-up -->
+    <div id="right1" class="p">
+      <p>
+        The right hall is warmer. Quick taps echo above him like something is sprinting along the bars.
+        Noah looks up and catches a blur—too fast to be a person, too intentional to be “just the wind.”
+      </p>
+      <p>
+        A painted gate waits at the end.
+        The color looks playful… which honestly makes it more suspicious.
+      </p>
+      <p>
+        <a href="#right2">He follows the tapping</a> &nbsp;&nbsp; <a href="#right3">He follows the smell of fruit</a>
       </p>
     </div>
 
     <div id="right2" class="p">
       <p>
-        He looks up. A shadow darts out of sight—fast.
-        A tiny squeak follows, then a soft jingle like a keychain.
+        He follows the tapping. It circles above him like it’s showing off.
+        Then—<em>jingle</em>. Like a keychain.
+      </p>
+      <p>
+        Noah checks his pocket automatically. Still there… for now.
       </p>
       <p>
         <a href="#pink">The <span class="pink">PINK</span> gate</a>
@@ -280,9 +367,10 @@
 
     <div id="right3" class="p">
       <p>
-        He keeps his eyes forward. The taps continue above him anyway.
-        Something brushes the top of his hair like a breeze with intention.
+        He follows the fruit smell. Sweet, warm, and way too strong for this hour.
+        Something brushes the top of his hair like a mischievous breeze.
       </p>
+      <p class="subtle">Okay. Not cute. Not cute at all.</p>
       <p>
         <a href="#pink">The <span class="pink">PINK</span> gate</a>
       </p>
@@ -293,66 +381,100 @@
         Something swoops past overhead. A small screech. A key-jingle.
         Noah looks down—his keys are gone.
       </p>
+      <p class="subtle">
+        Of course. Of course the keys are gone. Why wouldn’t they be?
+      </p>
       <p>
         <a href="#monkeydark">Lights off</a> &nbsp;&nbsp; <a href="#monkeyon">Lights on</a>
       </p>
     </div>
 
-    <!-- DARK OPTION ON RIGHT SIDE TOO (uses darkhallwayy.jpg) -->
+    <!-- DARK OPTION ON RIGHT SIDE TOO (darkhallwayy.jpg) -->
     <div id="monkeydark" class="p bg dark" style="--img:url('images/darkhallwayy.jpg')">
       <p>
         Lights off. The enclosure becomes a maze of shadows.
-        Something small moves close to the ground, then above his head, then behind him—
-        too fast to follow.
+        Something small moves close to the ground, then above his head, then behind him—like it’s testing how fast he can turn.
       </p>
-      <p class="subtle">A tiny jingle circles him like it’s playing a game.</p>
+      <p class="subtle">
+        The key-jingle circles him… left, right, above… like a tiny victory parade.
+      </p>
       <p>
-        <a href="#monkeyon">The switch</a> &nbsp;&nbsp; <a href="#pink">Back</a>
+        <a href="#monkeyon">He flips the switch (lights back ON)</a> &nbsp;&nbsp; <a href="#pink">Back</a>
       </p>
     </div>
 
     <!-- MONKEY ON (monkeyswing.jpg) -->
     <div id="monkeyon" class="p bg light" style="--img:url('images/monkeyswing.jpg')">
       <p>
-        The lights come on. A monkey swings by with Noah’s keys like a trophy,
-        then pauses—watching him.
+        The lights come on.
+        A monkey swings by with Noah’s keys like a trophy, pauses mid-swing, and stares at him like it’s judging his whole personality.
       </p>
-      <p class="subtle">It waits for whatever Noah does next.</p>
       <p>
-        <a href="#end_safe_keys">Play</a> &nbsp;&nbsp; <a href="#end_safe_nokeys">Run</a>
+        The monkey squeaks—almost like laughter—and swings lower, just close enough to make Noah think
+        he could maybe get the keys back… maybe.
+      </p>
+      <p class="subtle">Noah’s next move changes the vibe instantly.</p>
+      <p>
+        <a href="#play1">He plays along</a> &nbsp;&nbsp; <a href="#run1">He bolts</a>
+      </p>
+    </div>
+
+    <div id="play1" class="p bg light" style="--img:url('images/monkeyswing.jpg')">
+      <p>
+        Noah raises his hands slowly like, “okay okay, you win.”
+        The monkey squeaks again and swings in a circle, showing off like it’s performing for an audience.
+      </p>
+      <p>
+        Noah grabs a soft enrichment toy off the side (thank you, training manuals) and tosses it gently.
+        The monkey catches it like it’s the best thing that’s ever happened.
+      </p>
+      <p>
+        <a href="#end_safe_keys">The monkey drops the keys</a>
+      </p>
+    </div>
+
+    <div id="run1" class="p bg dark" style="--img:url('images/darkhallwayy.jpg')">
+      <p>
+        Noah bolts.
+        The monkey screeches—not playful anymore—and the jingle gets faster behind him like tiny footsteps on a drum.
+      </p>
+      <p>
+        Noah doesn’t look back. He just runs until the air changes and the zoo feels open again.
+      </p>
+      <p>
+        <a href="#end_safe_nokeys">He makes it out</a>
       </p>
     </div>
 
     <!-- ENDINGS (ONLY 3) -->
     <div id="end_safe_keys" class="p">
       <p>
-        Noah makes it out. The keys are still in his hand. The zoo goes quiet again—like nothing happened.
+        Noah makes it out. The keys are still in his hand.
+        His laugh comes out shaky, like his body is trying to pretend this was funny.
       </p>
+      <p class="subtle">The zoo goes quiet again—like nothing happened. Like it didn’t just happen to him.</p>
       <div class="end">SAFE + KEYS ✅</div>
-      <p style="margin-top:16px;">
-        <a href="#start">Again</a> &nbsp;&nbsp; <a href="index.html">Home</a>
-      </p>
+      <p style="margin-top:16px;"><a href="#start">Again</a></p>
     </div>
 
     <div id="end_safe_nokeys" class="p">
       <p>
-        Noah gets out, breathing hard. Behind him, a tiny victory screech echoes.
-        The keys do not return.
+        Noah gets out, breathing hard.
+        Behind him, a tiny victory screech echoes like a laugh track from a horror-comedy.
       </p>
+      <p class="subtle">The keys do not return. Tomorrow is going to be… embarrassing.</p>
       <div class="end">SAFE… NO KEYS 😬</div>
-      <p style="margin-top:16px;">
-        <a href="#start">Again</a> &nbsp;&nbsp; <a href="index.html">Home</a>
-      </p>
+      <p style="margin-top:16px;"><a href="#start">Again</a></p>
     </div>
 
     <div id="end_dead" class="p bg dark" style="--img:url('images/darklionface.jpg')">
       <p>
-        Noah hesitates. The lion doesn’t. The flashlight hits the floor, the light spins, and the night ends.
+        Noah hesitates. The lion doesn’t.
+        The flashlight hits the floor, the light spins, and the zoo becomes a blur of shadow and breath.
       </p>
+      <p class="subtle">The night shift ends here.</p>
       <div class="end">TOO LATE 💀</div>
-      <p style="margin-top:16px;">
-        <a href="#start">Again</a> &nbsp;&nbsp; <a href="index.html">Home</a>
-      </p>
+      <p style="margin-top:16px;"><a href="#start">Again</a></p>
     </div>
 
   </div>
