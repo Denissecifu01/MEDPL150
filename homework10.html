@@ -1,1 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zoo After Hours — Noah</title>
+<style>
+  :root{--bg:#0b0b18;--card:#161633;--txt:#f7f7ff;--mut:#c8c8ea;--b:#2d6bff;--p:#ff3fb5;--y:#ffd166;--g:#35f59a;--r:#ff4d6d;}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--txt);}
+  header{padding:28px 16px;text-align:center}
+  h1{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.5px}
+  p{margin:.5rem 0;color:var(--mut)}
+  main{max-width:860px;margin:0 auto;padding:0 16px 40px}
+  section{display:none;background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);margin-top:14px}
+  #start{display:block}
+  section:target{display:block}
+  .title{font-size:1.25rem;margin:0 0 6px;color:var(--txt)}
+  .hint{font-size:.92rem;color:var(--mut);margin:0 0 10px}
+  .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
+  a.btn{display:block;text-decoration:none;color:var(--txt);font-weight:700;text-align:center;padding:12px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);transition:.15s}
+  a.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+  .left{border-color:rgba(45,107,255,.55)}
+  .right{border-color:rgba(255,63,181,.55)}
+  .blue{background:linear-gradient(135deg,rgba(45,107,255,.35),rgba(255,255,255,.06));border-color:rgba(45,107,255,.65)}
+  .pink{background:linear-gradient(135deg,rgba(255,63,181,.32),rgba(255,255,255,.06));border-color:rgba(255,63,181,.65)}
+  .on{background:linear-gradient(135deg,rgba(255,209,102,.32),rgba(255,255,255,.06));border-color:rgba(255,209,102,.7)}
+  .off{border-color:rgba(255,255,255,.22)}
+  .flicker{animation:flicker .8s ease}
+  @keyframes flicker{0%{filter:brightness(.8)}20%{filter:brightness(1.25)}40%{filter:brightness(.9)}60%{filter:brightness(1.15)}100%{filter:brightness(1)}}
+  .end{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.22);margin-top:10px}
+  .good{border-color:rgba(53,245,154,.6)} .warn{border-color:rgba(255,209,102,.7)} .bad{border-color:rgba(255,77,109,.7)}
+  .nav{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap}
+  .mini{color:var(--mut);font-size:.9rem;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.25)}
+  .mini:hover{color:var(--txt);border-bottom-color:rgba(255,255,255,.55)}
+  /* ROAR grow letters */
+  .roar{font-weight:900;letter-spacing:1px}
+  .roar span{display:inline-block;transform-origin:bottom;animation:grow 1s ease forwards}
+  .roar span:nth-child(1){animation-delay:0ms}.roar span:nth-child(2){animation-delay:90ms}.roar span:nth-child(3){animation-delay:180ms}
+  .roar span:nth-child(4){animation-delay:270ms}.roar span:nth-child(5){animation-delay:360ms}.roar span:nth-child(6){animation-delay:450ms}
+  .roar span:nth-child(7){animation-delay:540ms}.roar span:nth-child(8){animation-delay:630ms}.roar span:nth-child(9){animation-delay:720ms}
+  .roar span:nth-child(10){animation-delay:810ms}.roar span:nth-child(11){animation-delay:900ms}.roar span:nth-child(12){animation-delay:990ms}
+  @keyframes grow{0%{transform:scale(.7);opacity:.55}55%{transform:scale(1.55);opacity:1}100%{transform:scale(1.1);opacity:.85}}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Zoo After Hours</h1>
+  <p>Noah hears a noise. You decide what he does.</p>
+</header>
+
+<main>
+<section id="start">
+  <div class="title">Noah’s Night Shift</div>
+  <p class="hint">Two hallways split ahead. Pick one.</p>
+  <div class="choices">
+    <a class="btn left" href="#left">⬅️ GO LEFT</a>
+    <a class="btn right" href="#right">➡️ GO RIGHT</a>
+  </div>
+  <div class="nav"><a class="mini" href="index.html">🏠 back to home</a></div>
+</section>
+
+<section id="left">
+  <div class="title">Left Hallway</div>
+  <p class="hint">A colored gate waits in the cold air.</p>
+  <div class="choices">
+    <a class="btn blue" href="#blue">🔵 BLUE GATE</a>
+    <a class="btn" href="#start">↩️ BACK</a>
+  </div>
+</section>
+
+<section id="blue">
+  <div class="title">Inside the Blue Gate</div>
+  <p class="hint">Lights ON or OFF?</p>
+  <div class="choices">
+    <a class="btn on" href="#lion-on">💡 LIGHTS ON</a>
+    <a class="btn off" href="#lion-off">🌑 LIGHTS OFF</a>
+  </div>
+</section>
+
+<section id="lion-off">
+  <div class="title">Lights OFF</div>
+  <p class="hint">Two glowing eyes. Thick fur. Then…</p>
+  <p class="roar">
+    <span>r</span><span>o</span><span>a</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span><span>r</span>
+  </p>
+  <div class="choices">
+    <a class="btn on" href="#lion-on">💡 TURN LIGHTS ON</a>
+    <a class="btn" href="#blue">↩️ BACK</a>
+  </div>
+</section>
+
+<section id="lion-on" class="flicker">
+  <div class="title">Lights ON</div>
+  <p class="hint">Noah is face-to-face with a lion. RUN or STAY?</p>
+  <div class="choices">
+    <a class="btn" href="#ending-safe-keys">🏃 RUN</a>
+    <a class="btn" href="#ending-dead">🧍 STAY</a>
+  </div>
+</section>
+
+<section id="right">
+  <div class="title">Right Hallway</div>
+  <p class="hint">Fast taps above you. A colored gate waits.</p>
+  <div class="choices">
+    <a class="btn pink" href="#pink">💗 PINK GATE</a>
+    <a class="btn" href="#start">↩️ BACK</a>
+  </div>
+</section>
+
+<section id="pink">
+  <div class="title">Inside the Pink Gate</div>
+  <p class="hint">Something swings overhead… and Noah’s keys vanish. Lights ON or OFF?</p>
+  <div class="choices">
+    <a class="btn on" href="#monkey-on">💡 LIGHTS ON</a>
+    <a class="btn off" href="#monkey-off">🌑 LIGHTS OFF</a>
+  </div>
+</section>
+
+<section id="monkey-off">
+  <div class="title">Lights OFF</div>
+  <p class="hint">Tiny footsteps. A sleeve tug. Key-jingle. Noah flips the switch.</p>
+  <div class="choices">
+    <a class="btn on" href="#monkey-on">💡 TURN LIGHTS ON</a>
+    <a class="btn" href="#pink">↩️ BACK</a>
+  </div>
+</section>
+
+<section id="monkey-on" class="flicker">
+  <div class="title">Lights ON</div>
+  <p class="hint">A monkey swings by holding Noah’s keys. PLAY or RUN?</p>
+  <div class="choices">
+    <a class="btn" href="#ending-safe-keys">🧸 PLAY</a>
+    <a class="btn" href="#ending-safe-nokeys">🏃 RUN</a>
+  </div>
+</section>
+
+<!-- ONLY 3 ENDINGS -->
+<section id="ending-safe-keys">
+  <div class="title">ENDING: SAFE + KEYS ✅</div>
+  <p class="hint">Noah escapes AND keeps his keys. He swears he’s quitting… tomorrow.</p>
+  <div class="end good"><strong>Result:</strong> SAFE. Keys secured.</div>
+  <div class="choices">
+    <a class="btn" href="#start">🔁 PLAY AGAIN</a>
+    <a class="btn" href="index.html">🏠 BACK HOME</a>
+  </div>
+</section>
+
+<section id="ending-safe-nokeys">
+  <div class="title">ENDING: SAFE… NO KEYS 😬</div>
+  <p class="hint">Noah escapes, but the keys are gone. Somewhere behind him: a proud little screech.</p>
+  <div class="end warn"><strong>Result:</strong> SAFE… but keyless.</div>
+  <div class="choices">
+    <a class="btn" href="#start">🔁 PLAY AGAIN</a>
+    <a class="btn" href="index.html">🏠 BACK HOME</a>
+  </div>
+</section>
+
+<section id="ending-dead">
+  <div class="title">ENDING: TOO LATE 💀</div>
+  <p class="hint">Noah hesitates. The lion doesn’t. The flashlight hits the floor.</p>
+  <div class="end bad"><strong>Result:</strong> ATTACKED.</div>
+  <div class="choices">
+    <a class="btn" href="#start">🔁 TRY AGAIN</a>
+    <a class="btn" href="index.html">🏠 BACK HOME</a>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
 
